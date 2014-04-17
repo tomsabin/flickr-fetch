@@ -1,0 +1,10 @@
+mongodb:
+  host: localhost
+  port: 27017
+  database: flickr_dump
+  collection: photoset
+
+flickr:
+  default_photoset_id: your-default-photoset
+  shared_secret: your-api-secret
+  api_key: your-api-key

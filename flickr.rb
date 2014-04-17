@@ -1,16 +1,16 @@
 require 'flickraw'
 require 'mongo'
+require 'yaml'
 
-DEFAULT_PHOTOSET_ID = '72157638729659183'
-FlickRaw.shared_secret = 'your-shared-secret'
-FlickRaw.api_key = 'your-api-key'
+CONFIG = YAML.load_file('config.yml')
 
 module MongoDB
   include Mongo
 
   def self.insert(doc)
-    mongo_client = MongoClient.new('localhost', 27017)
-    coll = mongo_client.db('flickr_dump').collection('photoset')
+    mongo_client = MongoClient.new(CONFIG['mongodb']['host'], CONFIG['mongodb']['port'])
+    coll = mongo_client.db(CONFIG['mongodb']['database'])
+                       .collection(CONFIG['mongodb']['collection'])
     coll.drop
     doc.collect { |photo| coll.insert(photo) }
     mongo_client.close
@@ -18,8 +18,11 @@ module MongoDB
 end
 
 module Flickr
+  FlickRaw.shared_secret = CONFIG['flickr']['shared_secret']
+  FlickRaw.api_key = CONFIG['flickr']['api_key']
+
   def self.fetch_photoset(photoset_id = nil)
-    photoset_id = DEFAULT_PHOTOSET_ID if photoset_id.empty?
+    photoset_id = CONFIG['flickr']['default_photoset_id'] if photoset_id.empty?
     puts "...beginning fetch"
     begin
       response = flickr.photosets.getPhotos({ :photoset_id => photoset_id,
