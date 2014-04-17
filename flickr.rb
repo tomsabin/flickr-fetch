@@ -20,10 +20,12 @@ end
 module Flickr
   def self.fetch_photoset(photoset_id = nil)
     photoset_id = DEFAULT_PHOTOSET_ID if photoset_id.empty?
-    key = 'photoset:' + photoset_id.to_s
+    puts "...beginning fetch"
     begin
-      puts "...beginning fetch"
-      response = flickr.photosets.getPhotos({ :photoset_id => photoset_id, :extras => 'url_z, url_o', :page => 1, :per_page => 500})
+      response = flickr.photosets.getPhotos({ :photoset_id => photoset_id,
+                                              :extras => 'url_z, url_o',
+                                              :page => 1, :per_page => 500 })
+
       photos = response.photo.inject([]) do |result, element|
         result << { 'title' => element['title'],
                     'url_z' => element['url_z'],
@@ -60,11 +62,6 @@ module Flickr
     def permalink
       "http://www.flickr.com/photos/tom-sabin/#{@photo_id}/"
     end
-
-    # def get_exif(id)
-    #   camera, lens, focal length (lens model/info), aperture/shutter speed/iso
-    #   exif_hash = flickr.photos.getExif(:photo_id => id)["exif"]
-    # end
   end
 end
 
