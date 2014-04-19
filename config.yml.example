@@ -6,5 +6,6 @@ mongodb:
 
 flickr:
   default_photoset_id: your-default-photoset
+  flickr-username: your-username
   shared_secret: your-api-secret
   api_key: your-api-key

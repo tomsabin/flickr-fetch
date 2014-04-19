@@ -63,7 +63,7 @@ module Flickr
     end
 
     def permalink
-      "http://www.flickr.com/photos/tom-sabin/#{@photo_id}/"
+      "http://www.flickr.com/photos/#{CONFIG['flickr-username']}/#{@photo_id}/"
     end
   end
 end
