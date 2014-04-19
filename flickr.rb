@@ -46,7 +46,7 @@ module Flickr
 
   class Photo
     def initialize(photo_hash)
-      @title = photo_hash['title'] ? photo_hash['title'] : "Untitled"
+      @title = photo_hash['title'].empty? ? "Untitled" : photo_hash['title']
       @thumbnail_image_url = photo_hash['url_z']
       @original_image_url = photo_hash['url_o']
       @photo_id = photo_hash['id']
