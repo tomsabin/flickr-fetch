@@ -57,13 +57,13 @@ module Flickr
         title: @title,
         thumbnail_image_url: @thumbnail_image_url,
         original_image_url: @original_image_url,
-        id: @photo_id,
+        flickr_id: @photo_id,
         permalink: permalink
       }
     end
 
     def permalink
-      "http://www.flickr.com/photos/#{CONFIG['flickr-username']}/#{@photo_id}/"
+      "http://www.flickr.com/photos/#{CONFIG['flickr']['username']}/#{@photo_id}/"
     end
   end
 end
