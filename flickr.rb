@@ -1,6 +1,7 @@
 require 'flickraw'
 require 'mongo'
 require 'yaml'
+require 'pry'
 
 CONFIG = YAML.load_file('config.yml')
 
@@ -8,7 +9,7 @@ module MongoDB
   include Mongo
 
   def self.insert(doc)
-    mongo_client = MongoClient.new(CONFIG['mongodb']['host'], CONFIG['mongodb']['port'])
+    mongo_client = MongoClient.from_uri(CONFIG['mongodb']['uri'])
     coll = mongo_client.db(CONFIG['mongodb']['database'])
                        .collection(CONFIG['mongodb']['collection'])
     coll.drop

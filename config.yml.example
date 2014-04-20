@@ -1,8 +1,6 @@
 mongodb:
-  host: localhost
-  port: 27017
-  database: flickr_dump
-  collection: photoset
+  collection: your-collection
+  uri: mongodb://<user>:<password>@<host>:<port>/<database>
 
 flickr:
   default_photoset_id: your-default-photoset
