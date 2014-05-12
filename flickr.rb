@@ -22,8 +22,7 @@ module Flickr
   FlickRaw.shared_secret = CONFIG['flickr']['shared_secret']
   FlickRaw.api_key = CONFIG['flickr']['api_key']
 
-  def self.fetch_photoset(photoset_id = nil)
-    photoset_id = CONFIG['flickr']['default_photoset_id'] if photoset_id.empty?
+  def self.fetch_photoset(photoset_id = CONFIG['flickr']['default_photoset_id'])
     puts "...beginning fetch"
     begin
       response = flickr.photosets.getPhotos({ :photoset_id => photoset_id,
@@ -42,6 +41,8 @@ module Flickr
       puts "Fetch complete, found #{photos.size} photos from photoset: #{photoset_id}"
     rescue FlickRaw::FailedResponse
       puts "Fetch failed"
+    rescue StandardError => error
+      puts "Oops, something went wrong: #{error}"
     end
   end
 
